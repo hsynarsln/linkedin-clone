@@ -242,9 +242,16 @@ const User = styled(NavList)`
       align-items: center;
       display: flex;
       justify-content: center;
+      @media (max-width: 768px) {
+        position: absolute;
+        top: -35px;
+        border-radius: 5px 5px 0 0;
+      }
     }
   }
 `;
+
+//! REDUX
 
 const Work = styled(User)`
   border-left: 1px solid rgba(0, 0, 0, 0.08);
