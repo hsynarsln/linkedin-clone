@@ -1,8 +1,8 @@
 import { signInWithPopup, signOut } from 'firebase/auth';
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { auth, db, provider, storage } from '../firebase';
-import { SET_LOADING_STATUS, SET_USER } from './actionType';
+import { GET_ARTICLES, SET_LOADING_STATUS, SET_USER } from './actionType';
 
 export const setUser = payload => ({
   type: SET_USER,
@@ -12,6 +12,11 @@ export const setUser = payload => ({
 export const setLoading = status => ({
   type: SET_LOADING_STATUS,
   status: status
+});
+
+export const getArticles = payload => ({
+  type: GET_ARTICLES,
+  payload: payload
 });
 
 //! sign in
@@ -126,3 +131,18 @@ export const postArticleAPI = payload => {
     }
   };
 };
+
+//! get all articles
+export function getArticlesAPI() {
+  return async dispatch => {
+    let payload;
+
+    const q = await query(collection(db, 'articles'), orderBy('actor.date', 'desc'));
+    onSnapshot(q, querySnapshot => {
+      // console.log(querySnapshot.docs.map(doc => doc.data()));
+      payload = querySnapshot.docs.map(doc => doc.data());
+      // console.log(payload);
+      dispatch(getArticles(payload));
+    });
+  };
+}
