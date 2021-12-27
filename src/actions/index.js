@@ -2,11 +2,16 @@ import { signInWithPopup, signOut } from 'firebase/auth';
 import { addDoc, collection } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { auth, db, provider, storage } from '../firebase';
-import { SET_USER } from './actionType';
+import { SET_LOADING_STATUS, SET_USER } from './actionType';
 
 export const setUser = payload => ({
   type: SET_USER,
   user: payload
+});
+
+export const setLoading = status => ({
+  type: SET_LOADING_STATUS,
+  status: status
 });
 
 //! sign in
@@ -48,6 +53,9 @@ export const signOutAPI = () => {
 //! put image to storage && post to firestore
 export const postArticleAPI = payload => {
   return dispatch => {
+    //! ADD LOADING
+    dispatch(setLoading(true));
+
     //*-------------------------
     //! image upload to storage
     //*-------------------------
@@ -91,8 +99,30 @@ export const postArticleAPI = payload => {
             comments: 0,
             description: payload.description
           });
+
+          //! LOADING
+          dispatch(setLoading(false));
         }
       );
+      //*-------------------------
+      //! video upload to storage
+      //*-------------------------
+    } else if (payload.video) {
+      addDoc(collection(db, 'articles'), {
+        actor: {
+          description: payload.user.email,
+          title: payload.user.displayName,
+          date: payload.timestamp,
+          image: payload.user.photoURL
+        },
+        video: payload.video,
+        sharedImg: '',
+        comments: 0,
+        description: payload.description
+      });
+
+      //! LOADING
+      dispatch(setLoading(false));
     }
   };
 };
