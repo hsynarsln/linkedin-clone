@@ -7,6 +7,7 @@ export const setUser = payload => ({
   user: payload
 });
 
+//! sign in
 export const signInAPI = () => {
   return dispatch => {
     signInWithPopup(auth, provider)
@@ -18,6 +19,7 @@ export const signInAPI = () => {
   };
 };
 
+//! get user
 export const getUserAuth = () => {
   return dispatch => {
     auth.onAuthStateChanged(async user => {
@@ -28,6 +30,7 @@ export const getUserAuth = () => {
   };
 };
 
+//! sign out
 export const signOutAPI = () => {
   return dispatch => {
     signOut(auth)
