@@ -62,6 +62,24 @@ const Main = () => {
               <a>2 comments</a>
             </li>
           </SocialCounts>
+          <SocialActions>
+            <button>
+              <img src='/images/like-icon.svg' alt='' />
+              <span>Like</span>
+            </button>
+            <button>
+              <img src='/images/comments-icon.svg' alt='' />
+              <span>Comments</span>
+            </button>
+            <button>
+              <img src='/images/share-icon.svg' alt='' />
+              <span>Comments</span>
+            </button>
+            <button>
+              <img src='/images/send-icon.svg' alt='' />
+              <span>Send</span>
+            </button>
+          </SocialActions>
         </Article>
       </div>
     </Container>
@@ -218,7 +236,7 @@ const SharedImg = styled.div`
 const SocialCounts = styled.ul`
   line-height: 1.3;
   display: flex;
-  align-items: flex-satrt;
+  align-items: flex-start;
   overflow: auto;
   margin: 0 16px;
   padding: 8px 0;
@@ -229,6 +247,27 @@ const SocialCounts = styled.ul`
     font-size: 12px;
     button {
       display: flex;
+    }
+  }
+`;
+
+const SocialActions = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: flex-start;
+  margin: 0;
+  min-height: 40px;
+  padding: 4px 8px;
+  button {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px;
+    color: #0a0a0a;
+
+    @media (min-width: 768px) {
+      span {
+        margin-left: 8px;
+      }
     }
   }
 `;
