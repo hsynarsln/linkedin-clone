@@ -1,5 +1,7 @@
 import { signInWithPopup, signOut } from 'firebase/auth';
-import { auth, provider } from '../firebase';
+import { addDoc, collection } from 'firebase/firestore';
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { auth, db, provider, storage } from '../firebase';
 import { SET_USER } from './actionType';
 
 export const setUser = payload => ({
@@ -40,5 +42,57 @@ export const signOutAPI = () => {
       .catch(err => {
         console.log(err.message);
       });
+  };
+};
+
+//! put image to storage && post to firestore
+export const postArticleAPI = payload => {
+  return dispatch => {
+    //*-------------------------
+    //! image upload to storage
+    //*-------------------------
+    if (payload.image != '') {
+      const uploadRef = ref(storage, `images/${payload.image.name}`);
+      const upload = uploadBytesResumable(uploadRef, payload.image);
+      upload.on(
+        'state_changed',
+        snapshot => {
+          // Observe state change events such as progress, pause, and resume
+          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+          switch (snapshot.state) {
+            case 'paused':
+              console.log('Upload is paused');
+              break;
+            case 'running':
+              console.log('Upload is running');
+              break;
+          }
+        },
+        error => {
+          console.log(error.code);
+        },
+        async () => {
+          const downloadURL = await getDownloadURL(upload.snapshot.ref);
+          console.log(downloadURL);
+          //*------------------------
+          //! post description to firestore
+          //*--------------------------------
+          await addDoc(collection(db, 'articles'), {
+            actor: {
+              description: payload.user.email,
+              title: payload.user.displayName,
+              date: payload.timestamp,
+              image: payload.user.photoURL
+            },
+            video: payload.video,
+            sharedImg: downloadURL,
+            comments: 0,
+            description: payload.description
+          });
+        }
+      );
+    }
   };
 };
