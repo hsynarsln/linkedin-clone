@@ -13,7 +13,7 @@ export const Content = styled.div`
 
 export const Section = styled.section`
   min-height: 50px;
-  padding: 16px 0;
+  padding: 5px 0;
   box-sizing: content-box;
   text-align: center;
   text-decoration: underline;
@@ -44,7 +44,7 @@ export const Layout = styled.div`
   column-gap: 25px;
   row-gap: 25px;
   /* grid-template-row: auto; */
-  margin: 25px 0;
+  margin: 0;
   @media (max-width: 768px) {
     display: flex;
     flex-direction: column;

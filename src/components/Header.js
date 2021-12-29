@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
 import { signOutAPI } from '../actions';
-import { Container, Content, Logo, Nav, NavList, NavListWrap, Search, SearchIcon, SignOut, User } from '../styles/HeaderStyles';
+import { Container, Content, Logo, Nav, NavList, NavListWrap, Search, SearchIcon, SignOut, User, Work } from '../styles/HeaderStyles';
 
 const Header = props => {
   return (
@@ -84,10 +83,6 @@ const Header = props => {
 };
 
 //! REDUX
-
-const Work = styled(User)`
-  border-left: 1px solid rgba(0, 0, 0, 0.08);
-`;
 
 const mapStateToProps = state => {
   return {

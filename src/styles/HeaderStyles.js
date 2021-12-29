@@ -168,3 +168,7 @@ export const User = styled(NavList)`
     }
   }
 `;
+
+export const Work = styled(User)`
+  border-left: 1px solid rgba(0, 0, 0, 0.08);
+`;

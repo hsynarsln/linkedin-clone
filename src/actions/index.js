@@ -19,6 +19,8 @@ export const getArticles = payload => ({
   payload: payload
 });
 
+//* dispatch ile setUser'a fonksiyonda elde ettiğimiz user'ı atıyoruz.
+//? setUser --> type ve değer olarak reducer'a gönderiyoruz.
 //! sign in
 export const signInAPI = () => {
   return dispatch => {

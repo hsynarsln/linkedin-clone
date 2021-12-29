@@ -59,11 +59,16 @@ export const ShareBox = styled(CommonCard)`
       justify-content: space-around;
       padding-bottom: 4px;
       button {
+        padding: 2px 10px;
         img {
           margin: 0 4px 0 -2px;
         }
         span {
-          color: #70b5f9;
+          /* color: #70b5f9; */
+        }
+        &:hover {
+          background-color: #ededed;
+          border-radius: 5px;
         }
       }
     }
@@ -170,17 +175,21 @@ export const SocialCounts = styled.ul`
 export const SocialActions = styled.div`
   align-items: center;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   margin: 0;
   min-height: 40px;
   padding: 4px 8px;
   button {
     display: inline-flex;
     align-items: center;
-    padding: 8px;
+    padding: 8px 24px;
     color: #0a0a0a;
     border: none;
     background-color: #fff;
+    &:hover {
+      background-color: #ededed;
+      border-radius: 5px;
+    }
 
     @media (min-width: 768px) {
       span {
